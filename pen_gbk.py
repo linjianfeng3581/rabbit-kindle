@@ -65,39 +65,60 @@ def un_zip(ful_file_name):
 
 
 # 第一次遍历，就解压缩文件，然后将压缩文件删除
-for parent, _, filenames in os.walk(rotDir + srcDir):
-    for filename in filenames:
-        print>> logFile, filename
-        ext = os.path.splitext(filename)[1].lower()
-        if ext == ".rar":
-            un_rar(os.path.join(parent, filename))
-        if ext == ".zip":
-            un_zip(os.path.join(parent, filename))
+# for parent, _, filenames in os.walk(rotDir + srcDir):
+#     for filename in filenames:
+#         print>> logFile, filename
+#         ext = os.path.splitext(filename)[1].lower()
+#         if ext == ".rar":
+#             un_rar(os.path.join(parent, filename))
+#         if ext == ".zip":
+#             un_zip(os.path.join(parent, filename))
 
-# 第二次遍历，就将文件拷贝到org-kindle目录夹中
+ignoreExtends = ['.rar', '.zip', '.7z', '.tar', '.iso']
+deleteExtends = ['', '.db', '.ebk3', '.003zip', '.flv', '.downloading', '.014', '.chm', '.jpg', '.006', '.torrent',
+                 '.ps', '.htm', '.019', '.011', '.010', '.xlsx', '.012', '.015', '.017', '.016', '.prc', '.log', '.url',
+                 '.018', '.cue', '.se!', '.html', '.dkp', '.uvz', '.020', '.umd', '.008', '.009', '.007',
+                 '.004', '.002', '.003', '.mbp', '.ape', '.cfg', '.pdb', '.013', '.exe', '.opf']
+
+
+# 将文件拷贝到org-kindle目录夹中
+# 统计
+ignoreFiles = 0
+deleteFiles = 0
+moveToFiles = 0
 for parent, _, filenames in os.walk(rotDir + srcDir):
     for filename in filenames:
         ext = os.path.splitext(filename)[1].lower()
-        extDir = ext.split(".")[1]
+        extDir = "" if ext == "" else ext.split(".")[1]
         extDir = "other" if extDir == "" else extDir
         newDir = rotDir + disDir + extDir + "/" + today + "/"
-        if not os.path.exists(newDir):
-            os.makedirs(newDir)
-        else:
-            try:
-                if filename.startswith('._'):
-                    os.remove(parent + '/' + filename)
-                    print>> logFile, parent + '/' + filename, '>>>> WAS DELETE'
-                else:
-                    shutil.move(parent + '/' + filename, newDir + filename)
-                    print>> logFile, parent + '/' + filename, '>>>>TO>>>>', newDir + filename
-            except Exception, e:
-                print>> logFile, e
-                pass
 
-# 第三次遍历，将空文件夹
+        if ext in ignoreExtends:
+            print>> logFile, 'IGNORE>>>>', parent + '/' + filename
+            ignoreFiles += 1
+            pass
+        elif ext in deleteExtends or filename.startswith('._'):
+            os.remove(parent + '/' + filename)
+            deleteFiles += 1
+            print>> logFile, 'DELETE>>>>', parent + '/' + filename
+            pass
+        else:
+            if not os.path.exists(newDir):
+                os.makedirs(newDir)
+            else:
+                try:
+                    shutil.move(parent + '/' + filename, newDir + filename)
+                    moveToFiles += 1
+                    print>> logFile, 'MOVETO>>>>', parent + '/' + filename, newDir + filename
+                except Exception, e:
+                    print>> logFile, e
+                    pass
+
+print("忽略的文件个数为:" + str(ignoreFiles))
+print("删除的文件个数为:" + str(deleteFiles))
+print("移动的文件个数为:" + str(moveToFiles))
+
+# 删除空文件夹
 for parent, _, filenames in os.walk(rotDir + srcDir):
-    print parent
     if not os.listdir(parent):
-        print("this is empty")
         os.rmdir(parent)
