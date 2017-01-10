@@ -6,11 +6,6 @@ import os.path
 import zipfile
 import rarfile
 
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 srcDir = "/Users/Sirius/Code/Python/rabbit-kindle/zip"
 disDir = ""
 extends = []
@@ -35,22 +30,21 @@ def un_rar(ful_file_name):
 
 
 def un_zip(ful_file_name):
-    z_file = zipfile.ZipFile(ful_file_name)
+    z_file = zipfile.ZipFile(ful_file_name, 'r')
     dir_name = os.path.splitext(ful_file_name)[0]
     if os.path.isdir(dir_name):
         pass
     else:
         os.mkdir(dir_name)
-    for names in z_file.namelist():
-        names = names.decode('gbk')
-        print names
-        z_file.extract(names, dir_name.decode('gbk'))
+    for files in z_file.namelist():
+        print(files)
+        z_file.extract(files, dir_name)
     z_file.close()
     del_file(ful_file_name)
 
 
 # 第一次遍历，就解压缩文件，然后将压缩文件删除
-for parent, _, filenames in os.walk(srcDir.decode('gbk')):
+for parent, _, filenames in os.walk(srcDir):
     for filename in filenames:
         ext = os.path.splitext(filename)[1].lower()
         if ext == ".rar":

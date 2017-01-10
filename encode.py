@@ -4,9 +4,9 @@
 
 def try_encode(s, encoding="utf-8"):
     try:
-        print s.encode(encoding)
+        print(s.encode(encoding))
     except UnicodeEncodeError as err:
-        print err
+        print(err)
 
 
 s1 = 'z'
