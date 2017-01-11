@@ -1,13 +1,9 @@
 #!/usr/bin/python
 # coding:utf8
 
-import os
 import os.path
 import shutil
-import zipfile
-
 import datetime
-import rarfile
 
 import sys
 
