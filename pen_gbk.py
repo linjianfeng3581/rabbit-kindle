@@ -10,15 +10,15 @@ import sys
 reload(sys)
 sys.setdefaultencoding('gbk')
 
-rotDir = "/Users/Sirius/Code/Python/rabbit-kindle/"
+rotDir = "D:/"
 
-srcDir = "kindle/"
+srcDir = "kindle/2017-01-04"
 disDir = "org-kindle/"
 logDir = "log/"
 extends = []
 
 today = datetime.date.today().isoformat()
-logFile = open(logDir + "log-" + today + ".txt", "a+")
+logFile = open(rotDir + logDir + "log-" + today + ".txt", "a+")
 
 
 ignoreExtends = ['.rar', '.zip', '.7z', '.tar', '.iso']
@@ -35,6 +35,7 @@ deleteFiles = 0
 moveToFiles = 0
 for parent, _, filenames in os.walk(rotDir + srcDir):
     for filename in filenames:
+        print parent + '/' + filename
         ext = os.path.splitext(filename)[1].lower()
         extDir = "" if ext == "" else ext.split(".")[1]
         extDir = "other" if extDir == "" else extDir
