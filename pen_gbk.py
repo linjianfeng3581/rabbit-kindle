@@ -20,13 +20,13 @@ extends = []
 today = datetime.date.today().isoformat()
 logFile = open(rotDir + logDir + "log-" + today + ".txt", "a+")
 
-
 ignoreExtends = ['.rar', '.zip', '.7z', '.tar', '.iso']
-deleteExtends = [ '.db', '.ebk3', '.003zip', '.flv', '.downloading', '.014', '.chm', '.jpg', '.006', '.torrent',
+deleteExtends = ['.db', '.ebk3', '.003zip', '.flv', '.downloading', '.014', '.chm', '.jpg', '.006', '.torrent',
                  '.ps', '.htm', '.019', '.011', '.010', '.xlsx', '.012', '.015', '.017', '.016', '.prc', '.log', '.url',
                  '.018', '.cue', '.se!', '.html', '.dkp', '.uvz', '.020', '.umd', '.008', '.009', '.007',
-                 '.004', '.002', '.003', '.mbp', '.ape', '.cfg', '.pdb', '.013', '.exe', '.opf']
-
+                 '.004', '.002', '.003', '.mbp', '.ape', '.cfg', '.pdb', '.013', '.exe', '.opf', '.cif', '.bin',
+                 '.class', '.cip', '.gif', '.evt', '.ini', '.mf', '.mid', '.pdg', '.png', '.thm', '.wav', '.x3', '.bak',
+                 '.bat', '.bmp']
 
 # 将文件拷贝到org-kindle目录夹中
 # 统计
@@ -46,10 +46,13 @@ for parent, _, filenames in os.walk(rotDir + srcDir):
             ignoreFiles += 1
             pass
         elif ext in deleteExtends or filename.startswith('._'):
-            os.remove(parent + '/' + filename)
-            deleteFiles += 1
-            print>> logFile, 'DELETE>>>>', parent + '/' + filename
-            pass
+            try:
+                os.remove(parent + '/' + filename)
+                deleteFiles += 1
+                print>> logFile, 'DELETE>>>>', parent + '/' + filename
+            except Exception, e:
+                print>> logFile, 'DELETE PROGRESSING---Exception:', e
+                pass
         else:
             if not os.path.exists(newDir):
                 os.makedirs(newDir)
