@@ -129,7 +129,7 @@ for parent, _, filenames in os.walk(rotDir + srcDir):
                     moveToFiles += 1
                     print>> logFile, 'MOVETO>>>>', parent + '/' + filename, newDir + filename
                 except Exception, e:
-                    print>> logFile, e
+                    print>> logFile, 'ERROR MOVETO>>>>', parent + '/' + filename, newDir + filename, e
                     pass
 
 print("忽略的文件个数为:" + str(ignoreFiles))
@@ -145,6 +145,14 @@ print("删除的文件个数为:" + str(deleteFiles))
 print("移动的文件个数为:" + str(moveToFiles))
 
 # 删除空文件夹
-for parent, _, filenames in os.walk(rotDir + srcDir):
-    if not os.listdir(parent):
-        os.rmdir(parent)
+for i in range(0, 7):
+    for parent, _, filenames in os.walk(rotDir + srcDir):
+        if not os.listdir(parent):
+            print parent
+            try:
+                os.rmdir(parent)
+            except Exception, e:
+                print "---------------------------------"
+                print "CANNOT DELETE", parent, e
+                print "---------------------------------"
+            print>> logFile, parent
