@@ -23,3 +23,4 @@ logFile = open(rotDir + logDir + "log-" + today + ".txt", "a+")
 for parent, _, filenames in os.walk(rotDir + srcDir):
     if not os.listdir(parent):
         os.rmdir(parent)
+        print>>logFile, parent
