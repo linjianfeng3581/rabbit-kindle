@@ -57,12 +57,16 @@ for parent, _, filenames in os.walk(rotDir + srcDir):
             if not os.path.exists(newDir):
                 os.makedirs(newDir)
             else:
+                src = parent + '/' + filename
+                dis = newDir + filename
                 try:
-                    shutil.move(parent + '/' + filename, newDir + filename)
+                    shutil.move(src, dis)
                     moveToFiles += 1
-                    print>> logFile, 'MOVETO>>>>', parent + '/' + filename, newDir + filename
+                    print>> logFile, 'MOVETO>>>>', src, dis
                 except Exception, e:
-                    print>> logFile, 'ERROR MOVETO>>>>', parent + '/' + filename, newDir + filename, e
+                    print>> logFile, 'ERROR MOVETO>>>>', src, dis, e
+                    os.remove(parent + '/' + filename)
+                    print>> logFile, 'DELETE DUPLICATE>>>>', src
                     pass
 
 print("忽略的文件个数为:" + str(ignoreFiles))
