@@ -26,5 +26,7 @@ for parent, _, filenames in os.walk(rotDir + srcDir):
         try:
             os.rmdir(parent)
         except Exception, e:
-            print parent, e
+            print "---------------------------------"
+            print "CANNOT DELETE", parent, e
+            print "---------------------------------"
         print>> logFile, parent
