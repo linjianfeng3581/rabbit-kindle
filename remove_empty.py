@@ -21,7 +21,7 @@ logFile = open(rotDir + logDir + "log-" + today + ".txt", "a+")
 
 # 删除空文件夹
 for i in range(0, 7):
-    for parent, _, filenames in os.walk(rotDir + srcDir):
+    for parent, _, filenames in os.walk(os.path.join(rotDir, srcDir)):
         if not os.listdir(parent):
             print parent
             try:

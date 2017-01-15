@@ -33,23 +33,23 @@ deleteExtends = ['.db', '.ebk3', '.003zip', '.flv', '.downloading', '.014', '.ch
 ignoreFiles = 0
 deleteFiles = 0
 moveToFiles = 0
-for parent, _, filenames in os.walk(rotDir + srcDir):
+for parent, _, filenames in os.walk(os.path.join(rotDir, srcDir)):
     for filename in filenames:
-        print parent + '/' + filename
+        print os.path.join(parent, filename)
         ext = os.path.splitext(filename)[1].lower()
         extDir = "" if ext == "" else ext.split(".")[1]
         extDir = "other" if extDir == "" else extDir
         newDir = rotDir + disDir + extDir + "/" + today + "/"
 
         if ext in ignoreExtends:
-            print>> logFile, 'IGNORE>>>>', parent + '/' + filename
+            print>> logFile, 'IGNORE>>>>', os.path.join(parent, filename)
             ignoreFiles += 1
             pass
         elif ext in deleteExtends or filename.startswith('._'):
             try:
-                os.remove(parent + '/' + filename)
+                os.remove(os.path.join(parent, filename))
                 deleteFiles += 1
-                print>> logFile, 'DELETE>>>>', parent + '/' + filename
+                print>> logFile, 'DELETE>>>>', os.path.join(parent, filename)
             except Exception, e:
                 print>> logFile, 'DELETE PROGRESSING---Exception:', e
                 pass
@@ -57,8 +57,8 @@ for parent, _, filenames in os.walk(rotDir + srcDir):
             if not os.path.exists(newDir):
                 os.makedirs(newDir)
             else:
-                src = parent + '/' + filename
-                dis = newDir + filename
+                src = os.path.join(parent, filename)
+                dis = os.path.join(newDir, filename)
                 try:
                     shutil.move(src, dis)
                     moveToFiles += 1
@@ -74,7 +74,7 @@ print("删除的文件个数为:" + str(deleteFiles))
 print("移动的文件个数为:" + str(moveToFiles))
 
 # 删除空文件夹
-for parent, _, filenames in os.walk(rotDir + srcDir):
+for parent, _, filenames in os.walk(os.path.join(rotDir, srcDir)):
     if not os.listdir(parent):
         os.rmdir(parent)
 
@@ -83,7 +83,7 @@ print("移动的文件个数为:" + str(moveToFiles))
 
 # 删除空文件夹
 for i in range(0, 7):
-    for parent, _, filenames in os.walk(rotDir + srcDir):
+    for parent, _, filenames in os.walk(os.path.join(rotDir, srcDir)):
         if not os.listdir(parent):
             print parent
             try:
