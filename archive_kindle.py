@@ -12,7 +12,7 @@ sys.setdefaultencoding('gbk')
 
 rotDir = "D:/"
 
-srcDir = "kindle/2017-01-04"
+srcDir = "kindle/2017-01-06"
 disDir = "org-kindle/"
 logDir = "log/"
 extends = []
@@ -26,7 +26,7 @@ deleteExtends = ['.db', '.ebk3', '.003zip', '.flv', '.downloading', '.014', '.ch
                  '.018', '.cue', '.se!', '.html', '.dkp', '.uvz', '.020', '.umd', '.008', '.009', '.007',
                  '.004', '.002', '.003', '.mbp', '.ape', '.cfg', '.pdb', '.013', '.exe', '.opf', '.cif', '.bin',
                  '.class', '.cip', '.gif', '.evt', '.ini', '.mf', '.mid', '.pdg', '.png', '.thm', '.wav', '.x3', '.bak',
-                 '.bat', '.bmp']
+                 '.bat', '.bmp','.mp3']
 
 # 将文件拷贝到org-kindle目录夹中
 # 统计
