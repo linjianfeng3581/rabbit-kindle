@@ -73,7 +73,7 @@ print("忽略的文件个数为:" + str(ignoreFiles))
 print("删除的文件个数为:" + str(deleteFiles))
 print("移动的文件个数为:" + str(moveToFiles))
 
-# 删除空文件夹
+# DELETE EMPTY FILES
 for parent, _, filenames in os.walk(os.path.join(rotDir, srcDir)):
     if not os.listdir(parent):
         os.rmdir(parent)
