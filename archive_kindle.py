@@ -39,7 +39,7 @@ for parent, _, filenames in os.walk(os.path.join(rotDir, srcDir)):
         ext = os.path.splitext(filename)[1].lower()
         extDir = "" if ext == "" else ext.split(".")[1]
         extDir = "other" if extDir == "" else extDir
-        newDir = rotDir + disDir + extDir + "/" + today + "/"
+        newDir = rotDir + disDir + extDir + '/' + today + '/'
 
         if ext in ignoreExtends:
             print>> logFile, 'IGNORE>>>>', os.path.join(parent, filename)
